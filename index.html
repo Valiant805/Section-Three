@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FIRST FASHION</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Junge&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="sectionThree">
+      <div class="page-heading">
+        <h2 id="fall">Fall /</h2>
+        <h2 id="winter">Winter /</h2>
+        <h2 id="spring">Spring</h2>
+      </div>
+      <h4>Collection</h4>
+      <div class="page-body">
+        <div class="prand falls">
+          <div class="item one"></div>
+          <div class="item two"></div>
+        </div>
+        <div class="prand winter">
+          <div class="item three"></div>
+          <div class="item four"></div>
+        </div>
+        <div class="prand spring">
+          <div class="item five"></div>
+          <div class="item six"></div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const collections = document.querySelectorAll(".prand");
+      const collectionHeadings = document.querySelectorAll(".page-heading h2");
+
+      let currentCollectionIndex = 0;
+      let currentItemIndex = 0;
+
+      const showCollectionItems = (collectionIndex) => {
+        // Hide all items of all collections
+        collections.forEach((collection) => {
+          collection.style.display = "none";
+        });
+        // Reset all h2 elements to default color
+        collectionHeadings.forEach((h2) => {
+          h2.style.color = "black"; // Change text color to default
+          h2.style.cursor = "pointer"; // Change cursor to pointer
+        });
+        // Show the items of the selected collection
+        collections[collectionIndex].style.display = "flex";
+        // Highlight the corresponding h2 element of the selected collection
+        collectionHeadings[collectionIndex].style.color = "white"; // Change text color to white
+      };
+
+      const showNextCollectionItems = () => {
+        // Increment currentItemIndex for the next iteration
+        currentItemIndex =
+          (currentItemIndex + 1) %
+          collections[currentCollectionIndex].querySelectorAll(".item").length;
+        // If all items of the current collection are shown, move to the next collection
+        if (currentItemIndex === 0) {
+          currentCollectionIndex =
+            (currentCollectionIndex + 1) % collections.length;
+        }
+        // Show items of the current collection
+        showCollectionItems(currentCollectionIndex);
+      };
+      // Initially, show the first collection's items
+      showCollectionItems(currentCollectionIndex);
+
+      // Set interval to switch collections' items every 3 seconds
+      setInterval(showNextCollectionItems, 3000);
+
+      // Add click event listener to each collection's heading
+      collectionHeadings.forEach((heading, index) => {
+        heading.addEventListener("click", () => {
+          currentCollectionIndex = index;
+          currentItemIndex = 0; // Reset item index when switching collections
+          showCollectionItems(currentCollectionIndex);
+        });
+      });
+    </script>
+  </body>
+</html>
